@@ -16,10 +16,10 @@
 
 # CONFIGURATION SECTION
 #<= CHANGE BELOW THIS AS NEEDED =>
-#Path to SQLMAP 
-SPATH=/home/hood3drob1n/fun/sqlmap
+#Path to SQLMAP
+SPATH=/home/md5hashbrowns/git/sqlmap
 #Path to FIMAP
-FPATH=/home/hood3drob1n/fun/fimap/src
+FPATH=/home/md5hashbrowns/git/fimap/src
 # Junk and Temp Files Location for tmp storage while script does its thing
 JUNK=/tmp
 # Pre-set for pagefinder plugin to use admin.lst file for finding admin files but can change to search for anything (plugins/pinfo.lst for example) based on server response and given word list with one per line, change as you like just make sure it exists before you run if you do :p
@@ -199,7 +199,7 @@ done
 
 # Clean Bing results to usable format
 bing_cleaner(){
-	# Clean up results from any possible sites we dont care about or cause high amounts of false positives (add your site like this: 
+	# Clean up results from any possible sites we dont care about or cause high amounts of false positives (add your site like this:
 	# grep -v 'site.com' (add pipe in front and after as needed) - maybe make black list variable in future to catch all...
 	# dont forget the section at bottom of script as well if you make changes....
 	cat "$STORAGE1" | grep -v 'http://www.bing.com' | grep -v 'javascript:void' | grep -v 'Hidden links:' | grep -v 'Visible links' | grep -v 'References' | grep -v 'msn.com' | grep -v 'microsoft.com' | grep -v 'yahoo.com' | grep -v 'live.com' | grep -v 'microsofttranslator.com' | grep -v 'irongeek.com' | grep -v 'hackforums.net' | grep -v 'freelancer.com' | grep -v 'facebook.com' | grep -v 'mozilla.org' | grep -v 'stackoverflow.com' | grep -v 'php.net' | grep -v 'wikipedia.org' | grep -v 'amazon.com' | grep -v '4shared.com' | grep -v 'wordpress.org' | grep -v 'about.com' | grep -v 'phpbuilder.com' | grep -v 'phpnuke.org' | grep -v 'youtube.com' | grep -v 'p4kurd.com' | grep -v 'tizag.com' | grep -v 'devshed.com' | grep -v 'owasp.org' | grep -v 'fictionbook.org' | grep -v 'silenthacker.do.am' | grep -v 'codingforums.com' | grep -v 'tudosobrehacker.com' | grep -v 'zymic.com' | grep -v 'gaza-hacker.com' | grep -v 'immortaltechnique.co.uk' | cut -d' ' -f4 | sed -f plugins/urldecode.sed | sed '/^$/d' | sed 's/9.//' | sed '/^$/d' | sort | uniq > b-links.txt
@@ -249,7 +249,7 @@ core(){
 				echo
 				if [ ! -r "$DORKFILE" ]; then
 					echo "Can't read provided file, please try another file or check permissions..." | grep --color -E 'Can||t read provided file||please try another file or check permissions'
-					echo			
+					echo
 				else
 					echo "Starting scan, be patient this will take a sec..." | grep --color -E 'Starting scan||be patient this will take a sec'
 					echo
@@ -313,7 +313,7 @@ sqli_reg(){
 	FAIL=1
 }
 
-# Compare results output returned after insertion of "'" and if more than 15% variance then check for missing tables rows (common sign of SQLi flaw) 
+# Compare results output returned after insertion of "'" and if more than 15% variance then check for missing tables rows (common sign of SQLi flaw)
 statistic_count(){
 		#Check byte count for each page we checked with curl (pre and post injection)
 		CHKCOUNT1=$(wc -l "$CHK1" | cut -d' ' -f1)
@@ -333,7 +333,7 @@ statistic_count(){
 					echo "[ POSSIBLE BLIND ] $sitetargets" | grep --color '\[ POSSIBLE BLIND \]'
 					echo "[ POSSIBLE BLIND ] $sitetargets" >> "$STORAGE3" 2> /dev/null
 					FAIL=1
-				fi			
+				fi
 
 			fi
 		fi
@@ -463,10 +463,10 @@ SQLiREGEX[75]="error ORA-";
 		i=$(( i +1 ))
 	done
 	if [ "$FAIL" == 0 ]; then
-		statistic_count			
+		statistic_count
 	fi
 	if [ "$FAIL" == 0 ]; then
-		echo "Nothing Found: $sitetargets"			
+		echo "Nothing Found: $sitetargets"
 	fi
 	cat "$STORAGE3" | uniq >> "$STORAGE5" 2> /dev/null 2>&1
 }
@@ -518,7 +518,7 @@ injector_tester_core(){
 		for lnkfile in $(find . -type f -name lnkfile-tmp_\* 2> /dev/null);
 		do
 			curl_magic &
-			
+
 		done
 		# Wait for background processes to finish before printing any results...
 		wait
@@ -554,7 +554,7 @@ injector_tester_core(){
 		for lnkfile in $(find . -type f -name lnkfile-tmp_\* 2> /dev/null);
 		do
 			curl_magic &
-			
+
 		done
 # Wait for background processes to finish before printing any results...
 		wait
@@ -697,7 +697,7 @@ bing_shared_hosting_check(){
 		 	echo "Error: cannot resolve provided hostname $TARGET to known IP address" | grep --color -E 'Error||cannot resolve provided hostname||to known IP address'
 			start_engine;
 		fi
-		echo 
+		echo
 		echo "OK, resolved $SHAREDTARGET to IP $SHAREDTARGETIP, running Bing dork tool now..." | grep --color -E 'OK||resolved||to IP||running Bing dork tool now'
 	fi
 
@@ -711,7 +711,7 @@ bing_shared_hosting_check(){
 		echo "Found $(wc -l $STORAGE4 | cut -d' ' -f1) Links..." | grep --color -E 'Found||Links'
 		COUNT=9
 	done
-	# Clean up results from any possible sites we dont care about or cause high amounts of false positives (add your site like this: 
+	# Clean up results from any possible sites we dont care about or cause high amounts of false positives (add your site like this:
 	# grep -v 'site.com' (add pipe in front and after as needed) - maybe make black list variable in future to catch all...
 	cat "$STORAGE4" | grep -v 'http://www.bing.com' | grep -v 'javascript:void' | grep -v 'Hidden links:' | grep -v 'Visible links' | grep -v 'References' | grep -v 'msn.com' | grep -v 'microsoft.com' | grep -v 'yahoo.com' | grep -v 'live.com' | grep -v 'microsofttranslator.com' | grep -v 'irongeek.com' | grep -v 'hackforums.net' | grep -v 'freelancer.com' | grep -v 'facebook.com' | grep -v 'mozilla.org' | grep -v 'stackoverflow.com' | grep -v 'php.net' | grep -v 'wikipedia.org' | grep -v 'amazon.com' | grep -v '4shared.com' | grep -v 'wordpress.org' | grep -v 'sourceforge.net' | grep -v 'about.com' | grep -v 'phpbuilder.com' | grep -v 'phpnuke.org' | grep -v 'youtube.com' | grep -v 'tizag.com' | grep -v 'devshed.com' | grep -v 'owasp.org' | grep -v 'fictionbook.org' | grep -v 'p4kurd.com' | grep -v 'silenthacker.do.am' | grep -v 'codingforums.com' | grep -v 'zymic.com' | grep -v 'gaza-hacker.com' | grep -v 'tudosobrehacker.com' | grep -v 'immortaltechnique.co.uk' | cut -d' ' -f4 | sed -f plugins/urldecode.sed | sed '/^$/d' | sed 's/9.//' | sed '/^$/d' | sort | uniq > shared.txt
 	echo
@@ -743,11 +743,11 @@ bing_geo_dorker(){
 
 AC AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BM BN BO BR BS BT BW BY BZ
 CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CX CY CZ DE DJ DK DM DO DZ EC EE EG ER ES ET EU FI FJ FK FM FO FR
-GA GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP  
-KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ  
+GA GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP
+KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ
 NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW
 SA SB SC SD SE SG SH SI SK SL SM SN SO SR SS ST SV SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ
-UA UG UK US UY UZ VA VC VE VG VI VN VU WF WS YE ZA ZM ZW 
+UA UG UK US UY UZ VA VC VE VG VI VN VU WF WS YE ZA ZM ZW
 
 BIZ COM INFO NET ORG AERO ASIA CAT COOP EDU GOV INT JOBS MIL MOBI MUSEUM TEL TRAVEL XXX"
 	echo
@@ -767,7 +767,7 @@ BIZ COM INFO NET ORG AERO ASIA CAT COOP EDU GOV INT JOBS MIL MOBI MUSEUM TEL TRA
 		echo "Found $(wc -l $STORAGE4 | cut -d' ' -f1) Links..." | grep --color -E 'Found||Links'
 		COUNT=9
 	done
-	# Clean up results from any possible sites we dont care about or cause high amounts of false positives (add your site like this: 
+	# Clean up results from any possible sites we dont care about or cause high amounts of false positives (add your site like this:
 	# grep -v 'site.com' (add pipe in front and after as needed) - maybe make black list variable in future to catch all in one spot for easier updates...
 	cat "$STORAGE4" | grep -v 'http://www.bing.com' | grep -v 'javascript:void' | grep -v 'Hidden links:' | grep -v 'Visible links' | grep -v 'References' | grep -v 'msn.com' | grep -v 'microsoft.com' | grep -v 'yahoo.com' | grep -v 'live.com' | grep -v 'microsofttranslator.com' | grep -v 'irongeek.com' | grep -v 'hackforums.net' | grep -v 'freelancer.com' | grep -v 'facebook.com' | grep -v 'mozilla.org' | grep -v 'stackoverflow.com' | grep -v 'php.net' | grep -v 'wikipedia.org' | grep -v 'amazon.com' | grep -v '4shared.com' | grep -v 'wordpress.org' | grep -v 'sourceforge.net' | grep -v 'about.com' | grep -v 'phpbuilder.com' | grep -v 'phpnuke.org' | grep -v 'youtube.com' | grep -v 'tizag.com' | grep -v 'devshed.com' | grep -v 'owasp.org' | grep -v 'fictionbook.org' | grep -v 'p4kurd.com' | grep -v 'silenthacker.do.am' | grep -v 'codingforums.com' | grep -v 'zymic.com' | grep -v 'gaza-hacker.com' | grep -v 'tudosobrehacker.com' | grep -v 'immortaltechnique.co.uk' | cut -d' ' -f4 | sed -f plugins/urldecode.sed | sed '/^$/d' | sed 's/9.//' | sed '/^$/d' | sort | uniq > GEO.txt
 	echo
