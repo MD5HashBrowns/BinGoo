@@ -74,7 +74,8 @@ fimap_wrapper(){
 					echo
 					trapper=1
 					cat results/LFI.results | sed 's/\[ LFI VULN FOUND \]//' | cut -d' ' -f2 | sed 's/%27//' > "$STORAGE1"
-					python2 $FPATH/fimap.py -m -l $STORAGE1 -b --bmin=4 --bmax=9 -D --dot-trunc-also-unix -A $uagent3 -C --force-run
+					#python2 $FPATH/fimap.py -m -l $STORAGE1 -b --bmin=4 --bmax=9 -D --dot-trunc-also-unix -A $uagent3 -C --force-run
+					python2 $FPATH/fimap.py -m -l $STORAGE1 -D --dot-trunc-also-unix -A $uagent3 -C --force-run
 					trapper=0
 				fi
 				rm -rf "$STORAGE1" 2> /dev/null
@@ -93,7 +94,7 @@ fimap_wrapper(){
 				else
 					echo "Starting scan, be patient this will take a sec..." | grep --color -E 'Starting scan||be patient this will take a sec'
 					trapper=1
-					python2 $FPATH/fimap.py -m -l $FIMAPLINKS -b --bmin=4 --bmax=9 -D --dot-trunc-also-unix -A $uagent3 -C --force-run
+					python2 $FPATH/fimap.py -m -l $FIMAPLINKS -D --dot-trunc-also-unix -A $uagent3 -C --force-run
 					trapper=0
 				fi
 				lfi_banner
@@ -106,7 +107,7 @@ fimap_wrapper(){
 				echo
 				echo "Thanks, here we go..." | grep --color -E 'Thanks||here we go'
 				echo
-				python2 $FPATH/fimap.py -s -u $FIMAPSNGL -b --bmin=4 --bmax=9 -D --dot-trunc-also-unix -A $uagent1 -C --force-run
+				python2 $FPATH/fimap.py -s -u $FIMAPSNGLINKS -D --dot-trunc-also-unix -A $uagent1 -C --force-run
 				lfi_banner
 				fimap_wrapper
 			;;
